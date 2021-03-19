@@ -7,25 +7,32 @@ function isEven(num) {
 }
 
 function calc(input) {
-  const arr = input.split(",");
-  const negatives = [];
-  let sum = 0;
-  for (const num of arr) {
-    let n = num.trim();
-    if (n) {
-      n = parseInt(n, 10);
-      if (n > 0) {
-        sum += n;
-      } else {
-        negatives.push(n);
+  const result = input.split(",").reduce(
+    (acc, curr) => {
+      if (!curr.trim()) {
+        return acc;
       }
-    }
-  }
-  if (negatives.length) {
-    const msg = `Negative numbers not supported: ${negatives.join(", ")}`;
+      const n = parseInt(curr, 10);
+      if (n < 0) {
+        return {
+          sum: acc.sum,
+          negatives: acc.negatives.concat(n),
+        };
+      }
+      return {
+        sum: acc.sum + n,
+        negatives: acc.negatives,
+      };
+    },
+    { sum: 0, negatives: [] }
+  );
+  if (result.negatives.length) {
+    const msg = `Negative numbers not supported: ${result.negatives.join(
+      ", "
+    )}`;
     throw Error(msg);
   }
-  return sum;
+  return result.sum;
 }
 
 describe("isEven", () => {
