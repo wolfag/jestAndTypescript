@@ -18,7 +18,10 @@ describe("api", () => {
 
   it("get data", async () => {
     mockAxios.__setMockData(mockData);
+    const spy = jest.spyOn(axios, "get");
     const res = await axios.get<Person[]>("/people");
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith("/people");
     expect(res.data).toEqual(mockData);
   });
 
