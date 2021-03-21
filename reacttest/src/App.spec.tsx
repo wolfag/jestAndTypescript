@@ -1,4 +1,4 @@
-import { render, fireEvent } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import { App } from "./App";
 
 describe("App", () => {
@@ -7,8 +7,6 @@ describe("App", () => {
 
     expect(screen.getByText(/Hello world!/)).toBeTruthy();
 
-    expect(await screen.findAllByTestId('todo')).toHaveLength(20)
-
-    screen.debug();
+    expect(await screen.findAllByTestId("todo")).toHaveLength(20);
   });
 });

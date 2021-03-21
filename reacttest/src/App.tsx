@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
-interface Todo {
+export interface Todo {
   id: number;
   userId: number;
   title: string;
@@ -11,6 +11,7 @@ interface Todo {
 export const App: React.FC = () => {
   const [text, setText] = useState("Hello world!");
   const [todos, setTodos] = useState<Todo[]>([]);
+  const [showCompleted, setShowCompleted] = useState<boolean>(false);
 
   const fetchData = async () => {
     try {
@@ -23,6 +24,10 @@ export const App: React.FC = () => {
     }
   };
 
+  const filtered: Todo[] = showCompleted
+    ? todos.filter((todo) => todo.completed)
+    : todos;
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -30,13 +35,20 @@ export const App: React.FC = () => {
   return (
     <div>
       <ul>
-        {todos.map((todo) => (
+        {filtered.map((todo) => (
           <li key={todo.id} data-testid='todo'>
             {todo.title}
           </li>
         ))}
       </ul>
       {text}
+      <button
+        onClick={() => {
+          setShowCompleted(!showCompleted);
+        }}
+      >
+        Toggle
+      </button>
     </div>
   );
 };
