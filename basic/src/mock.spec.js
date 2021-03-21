@@ -12,7 +12,7 @@ it("Mock", () => {
   expect(cb).toHaveBeenCalledWith("Data");
 });
 
-fit("done callback", (done) => {
+it("done callback", (done) => {
   setTimeout(() => {
     expect(1).toBe(1);
     done();
